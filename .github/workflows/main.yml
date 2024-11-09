@@ -2,8 +2,10 @@ name: CI-CD
 
 on:
   push:
-    branchs: ("main")
+    branches: 
+      - "main"
   workflow_dispatch:
+
 jobs:
   ci:
     runs-on: ubuntu-latest
@@ -15,8 +17,8 @@ jobs:
       - name: Envio da Imagem Docker
         run: echo "Executando o comando Docker push"
 
- cd:
-   runs-on: ubuntu-latest
+  cd:
+    runs-on: ubuntu-latest
     steps:
       - name: Autenticar na AWS
         run: echo "Executando o comando aws configure"
