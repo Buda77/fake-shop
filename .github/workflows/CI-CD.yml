@@ -22,8 +22,7 @@ jobs:
       - name: Construção e envio da Imagem Docker
         run: echo "Executando o comando Docker build"
 
-      -
-        name: Construção e envio da Imagem Docker
+      - name: Construir e enviar a Imagem Docker (docker/build-push-action)
         uses: docker/build-push-action@v6
         with:
           context: ./src
@@ -31,21 +30,21 @@ jobs:
           file: src/Dockerfile
           tags: |
             iagolucas0712/fake-shop:latest
-            iagolucas0712/fake-shop:v${{github.run_number}}
+            iagolucas0712/fake-shop:v${{ github.run_number }}
 
   cd: 
     runs-on: ubuntu-latest
-    needs: [ci] 
+    needs: [ci]
     steps:
-     - name: Obter o código do projeto
-       uses: actions/checkout@v4
+      - name: Obter o código do projeto
+        uses: actions/checkout@v4
 
-     - name: Autenticar na AWS
-       uses: aws-actions/configure-aws-credentials@v4
-       with:
-         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-         aws-region: us-east-1
+      - name: Autenticar na AWS
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
  
     - name: Configurar o kubectl
         run: echo "Executando o comando aws eks update-kubeconfig"
